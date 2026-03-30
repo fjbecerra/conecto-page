@@ -53,7 +53,46 @@
 
   .logo span { color: var(--accent); }
 
-  .nav-badge {
+  .github-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .github-btn:hover {
+    background: #333;
+    transform: translateY(-1px);
+  }
+
+  .opensource-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: #555;
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.05s;
+    text-decoration: none;
+  }
+
+  .opensource-badge:hover { border-color: var(--ink); color: var(--ink); }
+
+
     font-size: 0.7rem;
     font-weight: 500;
     letter-spacing: 0.08em;
@@ -289,7 +328,59 @@
     border-radius: 50%;
   }
 
-  /* HOW IT WORKS */
+  .oss-strip {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    flex-wrap: wrap;
+  }
+
+  .oss-strip-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--ink);
+  }
+
+  .oss-strip-left strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .oss-strip-left span {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .oss-strip-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .oss-strip-btn:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+  }
+
+
   section.how {
     max-width: 960px;
     margin: 0 auto;
@@ -467,11 +558,21 @@
 
 <nav>
   <div class="logo">conecto<span>.</span></div>
-  <div class="nav-badge">Coming soon</div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="nav-badge">Coming soon</div>
+    <a href="https://github.com/fjbecerra/conecto" target="_blank" class="github-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
+  <a href="https://github.com/fjbecerra/conecto" target="_blank" class="opensource-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+    Open source — star us on GitHub
+  </a>
   <div class="hero-eyebrow">Early access</div>
   <h1>Your ad data,<br><em>everywhere</em> you work.</h1>
   <p class="hero-sub">Install the plugin inside Google Sheets, Excel, or Looker Studio — connect your ad accounts and pull live data without leaving your tool.</p>
@@ -528,9 +629,19 @@
       <p>Pull live campaign data directly into your spreadsheet or dashboard. Or skip the plugin and call the same API directly from any system.</p>
     </div>
   </div>
-</section>
 
-<!-- INTEGRATIONS -->
+  <div class="oss-strip">
+    <div class="oss-strip-left">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;opacity:0.6"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      <div>
+        <strong>Conecto is open source</strong>
+        <span>Inspect the code, report issues, or contribute — everything is built in the open.</span>
+      </div>
+    </div>
+    <a href="https://github.com/fjbecerra/conecto" target="_blank" class="oss-strip-btn">View on GitHub →</a>
+  </div>
+
+</section>
 <section class="integrations">
   <div class="section-label">Works with</div>
   <h2 class="section-title">Your tool, your workflow.</h2>
