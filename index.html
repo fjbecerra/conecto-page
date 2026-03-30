@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conecto — Connect Your Ad Data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0e0d;
+    --paper: #f5f3ef;
+    --accent: #2a6ef5;
+    --accent-soft: #e8effe;
+    --muted: #8a8784;
+    --border: #e0ddd8;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(245,243,239,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .logo span { color: var(--accent); }
+
+  .nav-badge {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--border);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(42,110,245,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    max-width: 820px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.2s;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.35s;
+  }
+
+  /* WAITLIST FORM */
+  .waitlist {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.5s;
+  }
+
+  .waitlist input[type="email"] {
+    padding: 14px 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    width: 280px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .waitlist input[type="email"]:focus {
+    border-color: var(--accent);
+  }
+
+  .waitlist input[type="email"]::placeholder { color: #bbb; }
+
+  .btn-primary {
+    padding: 14px 24px;
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .waitlist-note {
+    width: 100%;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  .success-msg {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    color: #1a9654;
+    font-size: 0.95rem;
+    font-weight: 500;
+    background: #edfbf4;
+    border: 1px solid #b2eecf;
+    padding: 12px 20px;
+    border-radius: 8px;
+  }
+
+  /* SOURCES */
+  .sources-bar {
+    padding: 48px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.65s;
+  }
+
+  .sources-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .sources-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .source-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .source-chip:hover { opacity: 1; }
+
+  .source-chip .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* HOW IT WORKS */
+  section.how {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 100px 24px;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin-bottom: 60px;
+    max-width: 560px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .step {
+    padding: 36px 32px;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .step:last-child { border-right: none; }
+  .step:hover { background: var(--accent-soft); }
+
+  .step-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .step h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* INTEGRATIONS */
+  section.integrations {
+    background: var(--ink);
+    padding: 100px 24px;
+    text-align: center;
+    color: var(--white);
+  }
+
+  .integrations .section-label { color: #6fa3ff; }
+
+  .integrations .section-title {
+    color: var(--white);
+    margin: 0 auto 60px;
+    text-align: center;
+  }
+
+  .integration-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .int-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    transition: background 0.2s, border-color 0.2s;
+    min-width: 180px;
+    justify-content: center;
+  }
+
+  .int-card:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  .int-icon {
+    width: 22px; height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .api-note {
+    margin-top: 40px;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .api-note code {
+    background: rgba(255,255,255,0.08);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    color: #6fa3ff;
+    font-size: 0.82rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 12px;
+  }
+
+  .footer-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    .step { border-right: none; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .sources-list { gap: 16px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">conecto<span>.</span></div>
+  <div class="nav-badge">Coming soon</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Early access</div>
+  <h1>Your ad data,<br><em>everywhere</em> you work.</h1>
+  <p class="hero-sub">Pull data from Google Ads, Meta, and more — straight into your spreadsheets, dashboards, and tools. No engineering required.</p>
+
+  <div class="waitlist" id="waitlist-form">
+    <input type="email" id="email-input" placeholder="you@company.com" />
+    <button class="btn-primary" onclick="handleSubmit()">Notify me</button>
+    <p class="waitlist-note">We're building in public. Drop your email and we'll keep you posted.</p>
+  </div>
+  <div class="success-msg" id="success-msg">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#1a9654" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="#1a9654" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    You're on the list — we'll be in touch!
+  </div>
+</section>
+
+<!-- SOURCES BAR -->
+<div class="sources-bar">
+  <div class="sources-label">Data sources</div>
+  <div class="sources-list">
+    <div class="source-chip"><span class="dot" style="background:#4285F4"></span> Google Ads</div>
+    <div class="source-chip"><span class="dot" style="background:#1877F2"></span> Meta Ads</div>
+    <div class="source-chip"><span class="dot" style="background:#000000"></span> TikTok Ads</div>
+    <div class="source-chip"><span class="dot" style="background:#0A66C2"></span> LinkedIn Ads</div>
+    <div class="source-chip"><span class="dot" style="background:#FF4500"></span> Reddit Ads</div>
+    <div class="source-chip" style="font-style: italic; color: #bbb; font-size: 0.82rem;">+ more on the way</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-label">How it works</div>
+  <h2 class="section-title">Simple by design.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Connect your accounts</h3>
+      <p>Authorise your ad platforms in a few clicks. Conecto handles authentication securely.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Choose your destination</h3>
+      <p>Send data to Google Sheets, Excel, or Looker Studio — or tap our public API for custom setups.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Data stays fresh</h3>
+      <p>Automatic syncs keep your reports up to date without any manual exports.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="integrations">
+  <div class="section-label">Works with</div>
+  <h2 class="section-title">Your tools, connected.</h2>
+  <div class="integration-grid">
+    <div class="int-card">
+      <div class="int-icon">🟩</div> Google Sheets
+    </div>
+    <div class="int-card">
+      <div class="int-icon">📗</div> Microsoft Excel
+    </div>
+    <div class="int-card">
+      <div class="int-icon">🔵</div> Looker Studio
+    </div>
+    <div class="int-card" style="border-style: dashed; opacity: 0.6;">
+      <div class="int-icon">⚙️</div> Your system
+    </div>
+  </div>
+  <p class="api-note">Public API available — build your own integration with <code>api.conecto.io</code></p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">conecto<span>.</span></div>
+  <div class="footer-note">© 2025 Conecto · Built with care · Still cooking 🍳</div>
+</footer>
+
+<script>
+  function handleSubmit() {
+    const input = document.getElementById('email-input');
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.style.borderColor = '#e74c3c';
+      setTimeout(() => input.style.borderColor = '', 1500);
+      return;
+    }
+    // In a real setup, POST to your backend here
+    document.getElementById('waitlist-form').style.display = 'none';
+    const msg = document.getElementById('success-msg');
+    msg.style.display = 'flex';
+  }
+
+  document.getElementById('email-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleSubmit();
+  });
+</script>
+</body>
+</html>
